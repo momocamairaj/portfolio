@@ -1,45 +1,68 @@
 import { motion } from "framer-motion";
+import heroVideo from "../assets/images/okinawa.mp4";
 
-const container = {
+const heroContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.15 }
+    transition: { delayChildren: 0, staggerChildren: 0.95 }
   }
 };
 
-const heroVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0 }
+const taglineVariants = {
+  hidden: { opacity: 0, clipPath: "inset(0 100% 0 0)" },
+  visible: {
+    opacity: 1,
+    clipPath: "inset(0 0% 0 0)",
+    transition: { duration: 1.2, ease: "easeOut", delay: 1.2 }
+  }
 };
 
-export default function Hero() {
+export default function Hero({ onNavigate }) {
+  const handleNavigate = (event, href) => {
+    if (!href) {
+      return;
+    }
+
+    if (onNavigate) {
+      event.preventDefault();
+      onNavigate(href);
+    }
+  };
+
   return (
     <motion.section
       id="home"
-      className="section hero"
+      className="section section--snap hero hero--monogram"
       initial="hidden"
       animate="visible"
-      variants={container}
+      variants={heroContainer}
     >
-      <motion.span className="hero__eyebrow" variants={heroVariants}>
-        Portfolio Preview
-      </motion.span>
-      <motion.h1 className="hero__title" variants={heroVariants}>
-        Building thoughtful digital experiences with a calm aesthetic.
-      </motion.h1>
-      <motion.p className="hero__subtitle" variants={heroVariants}>
-        This space will soon showcase selected work, writings, and video updates.
-        Explore the sections below to see the upcoming structure.
-      </motion.p>
-      <motion.div className="hero__actions" variants={heroVariants}>
-        <a className="button" href="#projects">
-          View Future Projects
-        </a>
-        <a className="button button--outline" href="#blog">
-          Browse Blog Section
-        </a>
-      </motion.div>
+      <div className="hero__media">
+        <video autoPlay loop muted playsInline src={heroVideo} />
+        <div className="hero__scrim" />
+      </div>
+      <div className="hero__inner">
+        <motion.div className="hero__content hero__content--solo" variants={heroContainer}>
+          <h1 className="hero__name sirivennela-regular">Momoca</h1>
+          <motion.p className="hero__tagline" variants={taglineVariants}>
+            ENGLISH AT COLUMBIA UNIVERSITY ᐧ PRE-LAW ᐧ MARKETING
+          </motion.p>
+          <motion.div
+            className="hero__links"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0, transition: { delay: 2.2, duration: 0.5 } }}
+          >
+            <a href="/work" onClick={(event) => handleNavigate(event, "/work")}>
+              View Work →
+            </a>
+            <a href="/footnotes" onClick={(event) => handleNavigate(event, "/footnotes")}>
+              Read Footnotes →
+            </a>
+          </motion.div>
+        </motion.div>
+      </div>
     </motion.section>
   );
 }
+

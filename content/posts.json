@@ -1,0 +1,29 @@
+[
+  {
+    "title": "In Case of Accident",
+    "subtitle": "Personal injury ads have flooded the subway, reflecting a city increasingly reliant on litigation for accountability.",
+    "byline": "Momoca Mairaj",
+    "date": "2026-02-01",
+    "slug": "in-case-of-accident",
+    "excerpt": "A reflection on personal injury ads in New York subways and what they reveal about trust, accountability, and economic precarity.",
+    "draft": false
+  },
+  {
+    "title": "Article B",
+    "subtitle": "Draft post placeholder.",
+    "byline": "Momoca Mairaj",
+    "date": "2026-02-01",
+    "slug": "article-b",
+    "excerpt": "Draft placeholder.",
+    "draft": true
+  },
+  {
+    "title": "Article C",
+    "subtitle": "Draft post placeholder.",
+    "byline": "Momoca Mairaj",
+    "date": "2026-02-01",
+    "slug": "article-c",
+    "excerpt": "Draft placeholder.",
+    "draft": true
+  }
+]

@@ -8,10 +8,7 @@ export default function Footer() {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.2 }}
     >
-      <p>
-        Crafted with intention. Placeholder content today, polished stories tomorrow.
-      </p>
-      <small>&copy; {new Date().getFullYear()} Your Name</small>
+      <small>&copy; {new Date().getFullYear()} Momoca Mairaj</small>
     </motion.footer>
   );
 }

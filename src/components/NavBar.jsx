@@ -1,56 +1,54 @@
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
-export default function NavBar({ sections = [] }) {
-  const [open, setOpen] = useState(false);
+export default function NavBar({ sections = [], onSectionNavigate, onBrandNavigate, isHome = false }) {
 
-  const toggleMenu = () => setOpen((prev) => !prev);
-  const closeMenu = () => setOpen(false);
+  const handleSectionClick = (event, href) => {
+    if (!onSectionNavigate) {
+      return;
+    }
+
+    event.preventDefault();
+    onSectionNavigate(href);
+  };
+
+  const handleBrandClick = (event) => {
+    if (!onBrandNavigate) {
+      return;
+    }
+
+    event.preventDefault();
+    onBrandNavigate();
+  };
+
+  const renderLink = (section) => (
+    <a href={section.href} onClick={(event) => handleSectionClick(event, section.href)}>
+      {section.label}
+    </a>
+  );
+
+  const navClassNames = ["nav"];
+  const containerClassNames = ["nav-container"];
+
+  if (isHome) {
+    containerClassNames.push("nav-container--hero");
+  }
 
   return (
-    <header className="nav-container">
+    <header className={containerClassNames.join(" ")}>
       <motion.nav
-        className="nav"
-        initial={{ y: -40, opacity: 0 }}
+        className={navClassNames.join(" ")}
+        initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
       >
-        <div className="nav__brand">Your Name</div>
-        <button
-          className="nav__toggle"
-          type="button"
-          aria-label={open ? "Close navigation" : "Open navigation"}
-          onClick={toggleMenu}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+        <a href="/" className="nav__brand sirivennela-regular" onClick={handleBrandClick}>
+          Momoca
+        </a>
         <ul className="nav__links nav__links--desktop">
           {sections.map((section) => (
-            <li key={section.id}>
-              <a href={`#${section.id}`}>{section.label}</a>
-            </li>
+            <li key={section.id}>{renderLink(section)}</li>
           ))}
         </ul>
-        <AnimatePresence>
-          {open ? (
-            <motion.ul
-              className="nav__links nav__links--mobile"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              onClick={closeMenu}
-            >
-              {sections.map((section) => (
-                <li key={section.id}>
-                  <a href={`#${section.id}`}>{section.label}</a>
-                </li>
-              ))}
-            </motion.ul>
-          ) : null}
-        </AnimatePresence>
       </motion.nav>
     </header>
   );

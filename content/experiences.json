@@ -1,0 +1,32 @@
+[
+  {
+    "id": "research-experience",
+    "title": "Research Experience",
+    "subtitle": "Girls Leadership",
+    "seasonOrYear": "2022-2024",
+    "slug": "research-experience",
+    "coverImage": "/assets/images/policy.png",
+    "excerpt": "As part of the AANHPI Youth Research Council, I co-led the first national study examining how culture and identity shape the leadership journeys of Asian American, Native Hawaiian, and Pacific Islander girls and gender-expansive youth.",
+    "route": "/work/research-experience"
+  },
+  {
+    "id": "sundays-studio",
+    "title": "Sundays Studio",
+    "subtitle": "Events & Partnerships",
+    "seasonOrYear": "Spring 2025",
+    "slug": "sundays-studio",
+    "coverImage": "/assets/images/nails.jpg",
+    "excerpt": "At sundays, a wellness-focused nail care brand, I supported influencer and community events from planning through execution, coordinated logistics and on-site engagement, and helped drive digital marketing performance.",
+    "route": "/work/sundays-studio"
+  },
+  {
+    "id": "pioneer-works",
+    "title": "Pioneer Works",
+    "subtitle": "Digital MarComm",
+    "seasonOrYear": "Summer 2025",
+    "slug": "pioneer-works",
+    "coverImage": "/assets/images/pioneerworks.jpg",
+    "excerpt": "I worked as a Digital Marketing and Communications Intern at Pioneer Works, supporting newsletters, program pages, and social content that connected audiences to live cultural experiences.",
+    "route": "/work/pioneer-works"
+  }
+]
