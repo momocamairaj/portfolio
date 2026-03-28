@@ -1,13 +1,20 @@
-import experiences from "../../content/experiences.json";
+import experiences from "../../content/experiences.js";
 import useCenteredCarousel from "../hooks/useCenteredCarousel.js";
 
-const projects = experiences.map((experience) => ({
-  ...experience,
-  href: experience.route || `/work/${experience.slug}`
-}));
+const projects = experiences
+  .filter((experience) => experience.showInList !== false)
+  .map((experience) => ({
+    ...experience,
+    excerpt: experience.shortDescription,
+    href: experience.route || `/work/${experience.slug}`
+  }));
 
 export default function Projects({ onNavigate }) {
-  const { containerRef, activeIndex, scrollToIndex } = useCenteredCarousel();
+  const initialCenteredIndex = projects.length >= 3 ? 1 : 0;
+  const { containerRef, activeIndex, scrollToIndex } = useCenteredCarousel(
+    "[data-carousel-item]",
+    initialCenteredIndex
+  );
 
   const handleNavigation = (event, href) => {
     if (!href) {
@@ -42,6 +49,8 @@ export default function Projects({ onNavigate }) {
         <div className="section__heading">
           <h2>SELECTED WORK</h2>
         </div>
+      </div>
+      <div className="projects__carousel-shell">
         <div
           className="work-carousel"
           ref={containerRef}

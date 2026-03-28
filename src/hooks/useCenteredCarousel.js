@@ -21,12 +21,13 @@ function findClosestCardIndex(container, cards) {
   return closestIndex;
 }
 
-export default function useCenteredCarousel(itemSelector = "[data-carousel-item]") {
+export default function useCenteredCarousel(itemSelector = "[data-carousel-item]", initialIndex = 0) {
   const containerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const rafIdRef = useRef(null);
   const snapTimeoutRef = useRef(null);
   const lastSnappedIndexRef = useRef(-1);
+  const hasInitializedRef = useRef(false);
 
   const scrollToIndex = useCallback((index, smooth = true) => {
     const container = containerRef.current;
@@ -52,6 +53,11 @@ export default function useCenteredCarousel(itemSelector = "[data-carousel-item]
     if (!container) {
       return undefined;
     }
+
+    const updateOverflowState = () => {
+      const isOverflowing = container.scrollWidth > container.clientWidth + 1;
+      container.dataset.carouselOverflowing = isOverflowing ? "true" : "false";
+    };
 
     const updateActiveCard = () => {
       const cards = Array.from(container.querySelectorAll(itemSelector));
@@ -84,9 +90,23 @@ export default function useCenteredCarousel(itemSelector = "[data-carousel-item]
       }, 140);
     };
 
-    const onResize = () => updateActiveCard();
+    const onResize = () => {
+      updateOverflowState();
+      updateActiveCard();
+    };
 
+    updateOverflowState();
     updateActiveCard();
+
+    const cards = Array.from(container.querySelectorAll(itemSelector));
+    if (cards.length > 0 && !hasInitializedRef.current) {
+      const boundedInitialIndex = Math.min(Math.max(initialIndex, 0), cards.length - 1);
+      scrollToIndex(boundedInitialIndex, false);
+      setActiveIndex(boundedInitialIndex);
+      lastSnappedIndexRef.current = boundedInitialIndex;
+      hasInitializedRef.current = true;
+    }
+
     container.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
 
@@ -98,7 +118,7 @@ export default function useCenteredCarousel(itemSelector = "[data-carousel-item]
       container.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
     };
-  }, [itemSelector, scrollToIndex]);
+  }, [initialIndex, itemSelector, scrollToIndex]);
 
   return {
     containerRef,

@@ -4,28 +4,16 @@ import Home from "./components/Home.jsx";
 import About from "./components/About.jsx";
 import Projects from "./components/Projects.jsx";
 import Footnotes from "./components/Footnotes.jsx";
-import SundaysProject from "./components/projects/SundaysProject.jsx";
-import ResearchExperienceProject from "./components/projects/ResearchExperienceProject.jsx";
-import NarratedDesignSystemsProject from "./components/projects/NarratedDesignSystemsProject.jsx";
-import InteractiveStorytellingLabProject from "./components/projects/InteractiveStorytellingLabProject.jsx";
-import PioneerWorksProject from "./components/projects/PioneerWorksProject.jsx";
 import ExperiencePage from "./components/projects/ExperiencePage.jsx";
 import ArticlePage from "./components/articles/ArticlePage.jsx";
 import Footer from "./components/Footer.jsx";
 import useRevealOnScroll from "./hooks/useRevealOnScroll.js";
+import experiences from "../content/experiences.js";
 
 const sections = [
   { id: "work", label: "Work", href: "/work" },
   { id: "footnotes", label: "Footnotes", href: "/footnotes" }
 ];
-
-const projectPagesBySlug = {
-  "sundays-studio": SundaysProject,
-  "research-experience": ResearchExperienceProject,
-  "narrated-design-systems": NarratedDesignSystemsProject,
-  "interactive-storytelling-lab": InteractiveStorytellingLabProject,
-  "pioneer-works": PioneerWorksProject
-};
 
 const getCurrentPath = () => (typeof window !== "undefined" ? window.location.pathname : "/");
 
@@ -71,6 +59,7 @@ export default function App() {
   const workSlug = workDetailMatch?.[1] || legacyProjectDetailMatch?.[1];
   const footnoteSlug = footnoteDetailMatch?.[1] || legacyBlogDetailMatch?.[1];
   const isWorkDetailPage = Boolean(workSlug);
+  const currentExperience = experiences.find((item) => item.slug === workSlug);
 
   useRevealOnScroll(isWorkDetailPage);
 
@@ -78,19 +67,10 @@ export default function App() {
   let pageClass = "app--default";
 
   if (workSlug) {
-    const ProjectPage = projectPagesBySlug[workSlug];
-    if (
-      workSlug === "pioneer-works" ||
-      workSlug === "research-experience" ||
-      workSlug === "sundays-studio"
-    ) {
+    if (currentExperience?.navTheme === "dark") {
       pageClass = "app--work-detail-dark-nav";
     }
-    if (ProjectPage) {
-      page = <ProjectPage />;
-    } else {
-      page = <ExperiencePage slug={workSlug} />;
-    }
+    page = <ExperiencePage slug={workSlug} />;
   } else if (footnoteSlug) {
     page = <ArticlePage slug={footnoteSlug} />;
     pageClass = "app--article";

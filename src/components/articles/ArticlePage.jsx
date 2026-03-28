@@ -1,66 +1,25 @@
-import { useEffect, useMemo, useState } from "react";
-import posts from "../../../content/posts.json";
-
-const postBodyModules = import.meta.glob("../../../content/posts/*.md", {
-  query: "?raw",
-  import: "default"
-});
+import { useMemo } from "react";
+import articles from "../../../content/articles.js";
 
 const defaultByline = "Momoca Mairaj";
 
 export default function ArticlePage({ slug }) {
-  const [body, setBody] = useState("");
-  const [loadError, setLoadError] = useState(false);
+  const post = useMemo(() => articles.find((item) => item.slug === slug), [slug]);
 
-  const post = useMemo(() => posts.find((item) => item.slug === slug), [slug]);
-
-  useEffect(() => {
-    let cancelled = false;
-    const modulePath = `../../../content/posts/${slug}.md`;
-    const loadBody = postBodyModules[modulePath];
-
-    setLoadError(false);
-    setBody("");
-
-    if (!loadBody) {
-      setLoadError(true);
-      return undefined;
-    }
-
-    loadBody()
-      .then((raw) => {
-        if (!cancelled) {
-          setBody(raw);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setLoadError(true);
-        }
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [slug]);
-
-  if (!post || loadError) {
+  if (!post) {
     return (
       <section className="section project-detail" id={`article-${slug}`}>
         <div className="project-detail__heading project-detail__heading--wide article-header">
           <span className="project-detail__eyebrow">Footnotes</span>
           <h2>Article not found</h2>
-          <p>This post is missing from `content/posts.json` or `content/posts/{slug}.md`.</p>
+          <p>This post is missing from `content/articles.js`.</p>
         </div>
       </section>
     );
   }
 
   const byline = post.byline || defaultByline;
-  const paragraphs = body
-    .split(/\r?\n\s*\r?\n/)
-    .map((paragraph) => paragraph.replace(/\r?\n/g, " ").trim())
-    .filter(Boolean);
+  const paragraphs = post.body || [];
 
   return (
     <section className="section project-detail" id={`article-${slug}`}>

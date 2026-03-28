@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
-import posts from "../../content/posts.json";
+import articles from "../../content/articles.js";
 
-const articles = posts
-  .filter((post) => post.draft === false)
-  .map((post) => ({ ...post, href: `/footnotes/${post.slug}` }));
+const visibleArticles = articles
+  .filter((article) => article.draft === false)
+  .sort((a, b) => new Date(b.date) - new Date(a.date))
+  .map((article) => ({ ...article, href: `/footnotes/${article.slug}` }));
 
 const cardVariants = {
   hidden: { opacity: 0, x: -20 },
@@ -33,7 +34,7 @@ export default function Footnotes({ onNavigate }) {
           <h2>FOOTNOTES</h2>
         </div>
         <div className="footnotes__list">
-          {articles.map((article, index) => (
+          {visibleArticles.map((article, index) => (
             <motion.div
               className="footnotes__row-wrap"
               key={article.slug}

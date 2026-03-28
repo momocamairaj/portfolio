@@ -266,10 +266,13 @@ main {
 
 .projects .section__inner {
   padding-top: clamp(7rem, 18vh, 11rem);
-  width: 100%;
-  max-width: 100%;
-  padding-left: 0;
-  padding-right: 0;
+  padding-bottom: 0;
+}
+
+.projects__carousel-shell {
+  width: min(100%, calc(var(--max-width) + 8rem));
+  margin: 0 auto;
+  padding: 0 1.5rem clamp(3rem, 5vw, 5rem);
 }
 
 .footnotes {
@@ -561,15 +564,19 @@ main {
 }
 
 .work-carousel {
-  --carousel-card-width: min(76vw, 340px);
+  --carousel-card-width: clamp(240px, 27vw, 300px);
   display: flex;
-  gap: clamp(1rem, 2vw, 1.75rem);
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: 50%;
-  padding: 1.25rem max(1rem, calc(50vw - (var(--carousel-card-width) / 2))) 2rem;
+  padding: 1.25rem 0 0;
   -webkit-overflow-scrolling: touch;
+}
+
+.work-carousel[data-carousel-overflowing="false"] {
+  justify-content: center;
 }
 
 .work-carousel:focus-visible {
@@ -872,6 +879,7 @@ main {
 
 .article-body p {
   margin: 0;
+  line-height: 1.5;
 }
 
 .project-detail__heading {
