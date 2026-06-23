@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import articles from "../../content/articles.js";
+import { toUrl } from "../paths.js";
 
 const visibleArticles = articles
   .filter((article) => article.draft === false)
@@ -46,7 +47,7 @@ export default function Footnotes({ onNavigate }) {
             >
               <div className="footnotes__row">
                 {article.href ? (
-                  <a href={article.href} onClick={(event) => handleNavigation(event, article.href)}>
+                  <a href={toUrl(article.href)} onClick={(event) => handleNavigation(event, article.href)}>
                     <span>{article.title}</span>
                   </a>
                 ) : (

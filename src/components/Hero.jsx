@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import heroVideo from "../assets/images/okinawa.mp4";
+import { toUrl } from "../paths.js";
 
 const heroContainer = {
   hidden: { opacity: 0 },
@@ -53,10 +54,10 @@ export default function Hero({ onNavigate }) {
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0, transition: { delay: 2.2, duration: 0.5 } }}
           >
-            <a href="/work" onClick={(event) => handleNavigate(event, "/work")}>
+            <a href={toUrl("/work")} onClick={(event) => handleNavigate(event, "/work")}>
               View Work →
             </a>
-            <a href="/footnotes" onClick={(event) => handleNavigate(event, "/footnotes")}>
+            <a href={toUrl("/footnotes")} onClick={(event) => handleNavigate(event, "/footnotes")}>
               Read Footnotes →
             </a>
           </motion.div>

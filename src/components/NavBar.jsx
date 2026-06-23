@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { toUrl } from "../paths.js";
 
 export default function NavBar({ sections = [], onSectionNavigate, onBrandNavigate, isHome = false }) {
 
@@ -21,7 +22,7 @@ export default function NavBar({ sections = [], onSectionNavigate, onBrandNaviga
   };
 
   const renderLink = (section) => (
-    <a href={section.href} onClick={(event) => handleSectionClick(event, section.href)}>
+    <a href={toUrl(section.href)} onClick={(event) => handleSectionClick(event, section.href)}>
       {section.label}
     </a>
   );
@@ -41,7 +42,7 @@ export default function NavBar({ sections = [], onSectionNavigate, onBrandNaviga
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
       >
-        <a href="/" className="nav__brand sirivennela-regular" onClick={handleBrandClick}>
+        <a href={toUrl("/")} className="nav__brand sirivennela-regular" onClick={handleBrandClick}>
           Momoca
         </a>
         <ul className="nav__links nav__links--desktop">

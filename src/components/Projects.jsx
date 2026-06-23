@@ -1,5 +1,6 @@
 import experiences from "../../content/experiences.js";
 import useCenteredCarousel from "../hooks/useCenteredCarousel.js";
+import { toUrl } from "../paths.js";
 
 const projects = experiences
   .filter((experience) => experience.showInList !== false)
@@ -64,7 +65,7 @@ export default function Projects({ onNavigate }) {
             const Element = project.href ? "a" : "article";
             const elementProps = project.href
               ? {
-                  href: project.href,
+                  href: toUrl(project.href),
                   onClick: (event) => handleNavigation(event, project.href)
                 }
               : {};

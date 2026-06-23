@@ -9,20 +9,19 @@ import ArticlePage from "./components/articles/ArticlePage.jsx";
 import Footer from "./components/Footer.jsx";
 import useRevealOnScroll from "./hooks/useRevealOnScroll.js";
 import experiences from "../content/experiences.js";
+import { getAppPath, toUrl } from "./paths.js";
 
 const sections = [
   { id: "work", label: "Work", href: "/work" },
   { id: "footnotes", label: "Footnotes", href: "/footnotes" }
 ];
 
-const getCurrentPath = () => (typeof window !== "undefined" ? window.location.pathname : "/");
-
 export default function App() {
-  const [path, setPath] = useState(getCurrentPath);
+  const [path, setPath] = useState(getAppPath);
 
   useEffect(() => {
     const handlePopState = () => {
-      setPath(getCurrentPath());
+      setPath(getAppPath());
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
@@ -35,11 +34,12 @@ export default function App() {
       return;
     }
 
-    if (to !== window.location.pathname) {
-      window.history.pushState({}, "", to);
+    const url = toUrl(to);
+    if (url !== window.location.pathname) {
+      window.history.pushState({}, "", url);
     }
 
-    setPath(getCurrentPath());
+    setPath(getAppPath());
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
